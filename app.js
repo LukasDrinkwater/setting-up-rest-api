@@ -20,6 +20,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  req.me = users[1];
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
@@ -39,5 +46,30 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
+// Hard coded database bata
+
+let users = {
+  1: {
+    id: "1",
+    username: "Robin Wieruch",
+  },
+  2: {
+    id: "2",
+    username: "Dave Davids",
+  },
+};
+
+let messages = {
+  1: {
+    id: "1",
+    text: "Hello World",
+    userId: "1",
+  },
+  2: {
+    id: "2",
+    text: "By World",
+    userId: "2",
+  },
+};
+
 module.exports = app;
-e;
